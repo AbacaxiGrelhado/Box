@@ -2,406 +2,436 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Caixas Centralizadas com Texto e Imagem Fixa</title>
+<title>Quadrados com Upload, Texto e Ícones</title>
 <style>
-body {
-    margin: 0;
-    height: 100vh;
-    background: url('img/fundo.png') no-repeat center center;
-    background-size: cover;
-    font-family: sans-serif;
-}
+    body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        background-color: #f0f0f0;
+        font-family: Arial, sans-serif;
+    }
 
-/* Caixa independente no topo */
-.top-box {
-    position: absolute;
-    top: 130px;   /* ajuste vertical */
-    left: 570px;  /* ajuste horizontal */
-    width: 400px;
-    height: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    border: 0px solid #9FC8A7;
-    background-color: #6F9F97;
-    color: white;
-    text-align: center;
-    font-size: 1em;
-}
+    .main-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 20px;
+    }
 
-.top-box::placeholder {
-    color: white;
-    opacity: 1;
-}
+    /* Caixa de texto superior centralizada */
+    #super-top {
+        width: 300px;
+        padding: 8px;
+        font-size: 16px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
 
-/* Wrapper para mover todo o conteúdo manualmente */
-.wrapper {
-    position: relative;
-    left: 450px;
-    top: 150px;
-}
+    /* Container das caixas de texto do topo com ícones */
+    .top-texts {
+        display: grid;
+        grid-template-columns: repeat(3, 100px);
+        grid-auto-rows: auto;
+        gap: 20px;
+        margin-bottom: 30px;
+        justify-content: center;
+        width: 100%;
+    }
 
-/* Container principal com escala */
-.main-container {
-    display: flex;
-    align-items: flex-start;
-    gap: 40px;
-    transform: scale(0.7);
-    transform-origin: top left;
-}
+    .top-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-/* Imagem fixa à esquerda do layout */
-.fixed-image {
-    position: absolute;
-    top: -180px;
-    left: 30%;
-    transform: translateX(-50%);
-    width: 180px;
-    height: auto;
-    z-index: 10;
-}
+    .top-box img {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 5px;
+    }
 
-/* Grandes caixas */
-.large-container {
-    display: grid;
-    grid-template-columns: repeat(2, 150px);
-    grid-template-rows: repeat(3, auto);
-    gap: 20px;
-    margin-top: 50px;
-}
+    .top-box input {
+        width: 100px;
+        padding: 5px;
+        text-align: center;
+        font-size: 14px;
+    }
 
-.box-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+    /* Centralizar última linha */
+    .last-row {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        grid-column: 1 / -1; /* ocupa toda a largura do grid */
+    }
 
-.box {
-    width: 150px;
-    height: 150px;
-    background: white;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    position: relative;
-}
+    /* Grid dos quadrados grandes: 3 colunas × 2 linhas */
+    .container {
+        display: grid;
+        grid-template-columns: repeat(3, 150px);
+        grid-template-rows: repeat(2, auto);
+        gap: 20px;
+        justify-items: center;
+        margin-bottom: 40px;
+    }
 
-.box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+    .square-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-.caption {
-    width: 150px;
-    margin-top: 5px;
-    padding: 5px;
-    box-sizing: border-box;
-    text-align: center;
-    background-color: #9FC8A7;
-    color: white;
-}
+    .square {
+        width: 150px;
+        height: 150px;
+        background-color: white;
+        border: 2px solid #ccc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
 
-.caption::placeholder {
-    color: white;
-    opacity: 1;
-}
+    .square img.uploaded {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+    }
 
-/* Caixas pequenas */
-.small-container {
-    display: flex;
-    gap: 10px;
-    margin-top: 50px;
-}
+    .square input[type="file"] {
+        display: none;
+    }
 
-.small-column {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
+    .text-box {
+        margin-top: 5px;
+        width: 150px;
+        box-sizing: border-box;
+        padding: 5px;
+        font-size: 14px;
+        text-align: center;
+    }
 
-.small-box-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+    /* Seção de quadrados menores (16) */
+    .small-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 100px);
+        grid-template-rows: repeat(4, auto);
+        gap: 15px;
+        justify-items: center;
+        margin-bottom: 40px;
+    }
 
-.small-box {
-    width: 100px;
-    height: 100px;
-    background: white;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
+    .small-square {
+        width: 100px;
+        height: 100px;
+        background-color: white;
+        border: 2px solid #ccc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
 
-.small-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+    .small-square img.uploaded {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+    }
 
-.small-caption {
-    width: 100px;
-    margin-top: 5px;
-    padding: 3px;
-    box-sizing: border-box;
-    font-size: 0.8em;
-    background-color: #9FC8A7;
-    color: white;
-}
+    .small-square input[type="file"] {
+        display: none;
+    }
 
-.small-caption::placeholder {
-    color: white;
-    opacity: 1;
-}
-
-input[type="file"] {
-    display: none;
-}
-
-/* Nova seção inferior independente */
-.bottom-wrapper {
-    position: absolute;
-    bottom: 0px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 60px; /* Espaço entre os grupos */
-}
-
-/* Primeiro grupo: 4 caixas */
-.bottom-bar {
-    display: flex;
-    gap: 20px;
-}
-
-/* Segundo grupo: 2 caixas */
-.bottom-bar-2 {
-    display: flex;
-    gap: 20px;
-}
-
-.bottom-box-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.bottom-box-image {
-    width: 40px;
-    height: auto;
-    margin-bottom: 5px;
-}
-
-.bottom-box {
-    width: 50px;
-    padding: 5px;
-    border: 0;
-    border-radius: 4px;
-    background-color: #9FC8A7;
-    color: white;
-    text-align: center;
-}
-
-.bottom-box::placeholder {
-    color: white;
-    opacity: 1;
-}
-.caption, .small-caption, .bottom-box {
-    border: none;
-    outline: none;
-    box-shadow: none;
-}
-body {
-    overflow-x: hidden; /* remove qualquer scroll horizontal */
-}
+    .small-text-box {
+        margin-top: 5px;
+        width: 100px;
+        box-sizing: border-box;
+        padding: 4px;
+        font-size: 12px;
+        text-align: center;
+    }
 </style>
 </head>
 <body>
 
-<!-- Nova caixa independente no topo -->
-<input type="text" class="top-box" placeholder="PERSONAGEM (PLAYER)">
+<div class="main-container">
 
-<div class="wrapper">
-  <div class="main-container">
-    <!-- Imagem fixa -->
-    <img src="img/centerpc.png" alt="Imagem fixa" class="fixed-image">
+    <!-- Caixa de texto superior centralizada -->
+    <input type="text" id="super-top" placeholder="Texto superior">
 
-    <!-- Caixas Grandes -->
-    <div class="large-container">
-      <div class="box-container"><div class="box" id="box0"></div><input type="text" class="caption" id="caption0" placeholder="PARTY 01"></div>
-      <div class="box-container"><div class="box" id="box1"></div><input type="text" class="caption" id="caption1" placeholder="PARTY 02"></div>
-      <div class="box-container"><div class="box" id="box2"></div><input type="text" class="caption" id="caption2" placeholder="PARTY 03"></div>
-      <div class="box-container"><div class="box" id="box3"></div><input type="text" class="caption" id="caption3" placeholder="PARTY 04"></div>
-      <div class="box-container"><div class="box" id="box4"></div><input type="text" class="caption" id="caption4" placeholder="PARTY 05"></div>
-      <div class="box-container"><div class="box" id="box5"></div><input type="text" class="caption" id="caption5" placeholder="PARTY 06"></div>
+    <!-- Topo: 3+3+2 caixas -->
+    <div class="top-texts">
+        <!-- Primeira linha -->
+        <div class="top-box">
+            <img src="img/icon1.png" alt="Icon 1">
+            <input type="text" id="top0" placeholder="Texto 1">
+        </div>
+        <div class="top-box">
+            <img src="img/icon2.png" alt="Icon 2">
+            <input type="text" id="top1" placeholder="Texto 2">
+        </div>
+        <div class="top-box">
+            <img src="img/icon3.png" alt="Icon 3">
+            <input type="text" id="top2" placeholder="Texto 3">
+        </div>
+
+        <!-- Segunda linha -->
+        <div class="top-box">
+            <img src="img/icon4.png" alt="Icon 4">
+            <input type="text" id="top3" placeholder="Texto 4">
+        </div>
+        <div class="top-box">
+            <img src="img/icon5.png" alt="Icon 5">
+            <input type="text" id="top4" placeholder="Texto 5">
+        </div>
+        <div class="top-box">
+            <img src="img/icon6.png" alt="Icon 6">
+            <input type="text" id="top5" placeholder="Texto 6">
+        </div>
+
+        <!-- Última linha centralizada -->
+        <div class="last-row">
+            <div class="top-box">
+                <img src="img/icon7.png" alt="Icon 7">
+                <input type="text" id="top6" placeholder="Texto 7">
+            </div>
+            <div class="top-box">
+                <img src="img/icon8.png" alt="Icon 8">
+                <input type="text" id="top7" placeholder="Texto 8">
+            </div>
+        </div>
     </div>
 
-    <!-- Caixas Pequenas -->
-    <div class="small-container">
-      <div class="small-column">
-        <div class="small-box-container"><div class="small-box" id="smallBox0"></div><input class="small-caption" id="smallCaption0" placeholder="BOX"></div>
-        <div class="small-box-container"><div class="small-box" id="smallBox1"></div><input class="small-caption" id="smallCaption1" placeholder="BOX"></div>
-        <div class="small-box-container"><div class="small-box" id="smallBox2"></div><input class="small-caption" id="smallCaption2" placeholder="BOX"></div>
-        <div class="small-box-container"><div class="small-box" id="smallBox3"></div><input class="small-caption" id="smallCaption3" placeholder="BOX"></div>
-      </div>
-      <div class="small-column">
-        <div class="small-box-container"><div class="small-box" id="smallBox4"></div><input class="small-caption" id="smallCaption4" placeholder="BOX"></div>
-        <div class="small-box-container"><div class="small-box" id="smallBox5"></div><input class="small-caption" id="smallCaption5" placeholder="BOX"></div>
-        <div class="small-box-container"><div class="small-box" id="smallBox6"></div><input class="small-caption" id="smallCaption6" placeholder="BOX"></div>
-        <div class="small-box-container"><div class="small-box" id="smallBox7"></div><input class="small-caption" id="smallCaption7" placeholder="BOX"></div>
-      </div>
-      <div class="small-column">
-        <div class="small-box-container"><div class="small-box" id="smallBox8"></div><input class="small-caption" id="smallCaption8" placeholder="BOX"></div>
-        <div class="small-box-container"><div class="small-box" id="smallBox9"></div><input class="small-caption" id="smallCaption9" placeholder="BOX"></div>
-        <div class="small-box-container"><div class="small-box" id="smallBox10"></div><input class="small-caption" id="smallCaption10" placeholder="BOX"></div>
-        <div class="small-box-container"><div class="small-box" id="smallBox11"></div><input class="small-caption" id="smallCaption11" placeholder="BOX"></div>
-      </div>
-      <div class="small-column">
-        <div class="small-box-container"><div class="small-box" id="smallBox12"></div><input class="small-caption" id="smallCaption12" placeholder="BOX"></div>
-        <div class="small-box-container"><div class="small-box" id="smallBox13"></div><input class="small-caption" id="smallCaption13" placeholder="BOX"></div>
-        <div class="small-box-container"><div class="small-box" id="smallBox14"></div><input class="small-caption" id="smallCaption14" placeholder="BOX"></div>
-        <div class="small-box-container"><div class="small-box" id="smallBox15"></div><input class="small-caption" id="smallCaption15" placeholder="BOX"></div>
-      </div>
-      <div class="small-column">
-        <div class="small-box-container"><div class="small-box" id="smallBox16"></div><input class="small-caption" id="smallCaption16" placeholder="BOX"></div>
-        <div class="small-box-container"><div class="small-box" id="smallBox17"></div><input class="small-caption" id="smallCaption17" placeholder="BOX"></div>
-        <div class="small-box-container"><div class="small-box" id="smallBox18"></div><input class="small-caption" id="smallCaption18" placeholder="BOX"></div>
-        <div class="small-box-container"><div class="small-box" id="smallBox19"></div><input class="small-caption" id="smallCaption19" placeholder="BOX"></div>
-      </div>
+    <!-- Grid de quadrados grandes: 3 colunas × 2 linhas -->
+    <div class="container">
+        <div class="square-container">
+            <div class="square" id="square0"><input type="file" accept="image/*"></div>
+            <input type="text" class="text-box" id="text0" placeholder="Digite aqui">
+        </div>
+        <div class="square-container">
+            <div class="square" id="square1"><input type="file" accept="image/*"></div>
+            <input type="text" class="text-box" id="text1" placeholder="Digite aqui">
+        </div>
+        <div class="square-container">
+            <div class="square" id="square2"><input type="file" accept="image/*"></div>
+            <input type="text" class="text-box" id="text2" placeholder="Digite aqui">
+        </div>
+        <div class="square-container">
+            <div class="square" id="square3"><input type="file" accept="image/*"></div>
+            <input type="text" class="text-box" id="text3" placeholder="Digite aqui">
+        </div>
+        <div class="square-container">
+            <div class="square" id="square4"><input type="file" accept="image/*"></div>
+            <input type="text" class="text-box" id="text4" placeholder="Digite aqui">
+        </div>
+        <div class="square-container">
+            <div class="square" id="square5"><input type="file" accept="image/*"></div>
+            <input type="text" class="text-box" id="text5" placeholder="Digite aqui">
+        </div>
     </div>
-  </div>
-</div>
 
-<!-- Nova barra inferior com 2 grupos -->
-<div class="bottom-wrapper">
-  <div class="bottom-bar">
-    <div class="bottom-box-container">
-      <img src="img/icon1.png" class="bottom-box-image">
-      <input type="text" class="bottom-box" id="bottom0" placeholder="00">
+    <!-- Grid de quadrados menores: 4 colunas × 4 linhas -->
+    <div class="small-grid">
+        <!-- Criar 16 quadrados menores -->
+        <!-- Podemos usar loop via JS, mas aqui está manual para referência -->
+        <div class="square-container">
+            <div class="small-square" id="small0"><input type="file" accept="image/*"></div>
+            <input type="text" class="small-text-box" id="small-text0" placeholder="Digite aqui">
+        </div>
+        <div class="square-container">
+            <div class="small-square" id="small1"><input type="file" accept="image/*"></div>
+            <input type="text" class="small-text-box" id="small-text1" placeholder="Digite aqui">
+        </div>
+        <div class="square-container">
+            <div class="small-square" id="small2"><input type="file" accept="image/*"></div>
+            <input type="text" class="small-text-box" id="small-text2" placeholder="Digite aqui">
+        </div>
+        <div class="square-container">
+            <div class="small-square" id="small3"><input type="file" accept="image/*"></div>
+            <input type="text" class="small-text-box" id="small-text3" placeholder="Digite aqui">
+        </div>
+        <div class="square-container">
+            <div class="small-square" id="small4"><input type="file" accept="image/*"></div>
+            <input type="text" class="small-text-box" id="small-text4" placeholder="Digite aqui">
+        </div>
+        <div class="square-container">
+            <div class="small-square" id="small5"><input type="file" accept="image/*"></div>
+            <input type="text" class="small-text-box" id="small-text5" placeholder="Digite aqui">
+        </div>
+        <div class="square-container">
+            <div class="small-square" id="small6"><input type="file" accept="image/*"></div>
+            <input type="text" class="small-text-box" id="small-text6" placeholder="Digite aqui">
+        </div>
+        <div class="square-container">
+            <div class="small-square" id="small7"><input type="file" accept="image/*"></div>
+            <input type="text" class="small-text-box" id="small-text7" placeholder="Digite aqui">
+        </div>
+        <div class="square-container">
+            <div class="small-square" id="small8"><input type="file" accept="image/*"></div>
+            <input type="text" class="small-text-box" id="small-text8" placeholder="Digite aqui">
+        </div>
+        <div class="square-container">
+            <div class="small-square" id="small9"><input type="file" accept="image/*"></div>
+            <input type="text" class="small-text-box" id="small-text9" placeholder="Digite aqui">
+        </div>
+        <div class="square-container">
+            <div class="small-square" id="small10"><input type="file" accept="image/*"></div>
+            <input type="text" class="small-text-box" id="small-text10" placeholder="Digite aqui">
+        </div>
+        <div class="square-container">
+            <div class="small-square" id="small11"><input type="file" accept="image/*"></div>
+            <input type="text" class="small-text-box" id="small-text11" placeholder="Digite aqui">
+        </div>
+        <div class="square-container">
+            <div class="small-square" id="small12"><input type="file" accept="image/*"></div>
+            <input type="text" class="small-text-box" id="small-text12" placeholder="Digite aqui">
+        </div>
+        <div class="square-container">
+            <div class="small-square" id="small13"><input type="file" accept="image/*"></div>
+            <input type="text" class="small-text-box" id="small-text13" placeholder="Digite aqui">
+        </div>
+        <div class="square-container">
+            <div class="small-square" id="small14"><input type="file" accept="image/*"></div>
+            <input type="text" class="small-text-box" id="small-text14" placeholder="Digite aqui">
+        </div>
+        <div class="square-container">
+            <div class="small-square" id="small15"><input type="file" accept="image/*"></div>
+            <input type="text" class="small-text-box" id="small-text15" placeholder="Digite aqui">
+        </div>
     </div>
-    <div class="bottom-box-container">
-      <img src="img/icon2.png" class="bottom-box-image">
-      <input type="text" class="bottom-box" id="bottom1" placeholder="00">
-    </div>
-    <div class="bottom-box-container">
-      <img src="img/icon3.png" class="bottom-box-image">
-      <input type="text" class="bottom-box" id="bottom2" placeholder="00">
-    </div>
-    <div class="bottom-box-container">
-      <img src="img/icon4.png" class="bottom-box-image">
-      <input type="text" class="bottom-box" id="bottom3" placeholder="00">
-    </div>
-  </div>
 
-  <div class="bottom-bar-2">
-    <div class="bottom-box-container">
-      <img src="img/icon5.png" class="bottom-box-image">
-      <input type="text" class="bottom-box" id="bottom4" placeholder="0000">
-    </div>
-    <div class="bottom-box-container">
-      <img src="img/icon6.png" class="bottom-box-image">
-      <input type="text" class="bottom-box" id="bottom5" placeholder="0000">
-    </div>
-  </div>
 </div>
 
 <script>
-// Grandes caixas
-const boxes = document.querySelectorAll('.box');
-const captions = document.querySelectorAll('.caption');
-boxes.forEach((box,index)=>{
-    const fileInput=document.createElement('input');
-    fileInput.type='file';
-    fileInput.accept='image/*';
-    document.body.appendChild(fileInput);
-    box.addEventListener('click',()=>fileInput.click());
-    fileInput.addEventListener('change',(e)=>{
-        const file=e.target.files[0];
-        if(!file) return;
-        const reader=new FileReader();
-        reader.onload=function(ev){
-            localStorage.setItem('box'+index,ev.target.result);
-            const oldImg=box.querySelector('img');
-            if(oldImg) box.removeChild(oldImg);
-            const img=document.createElement('img');
-            img.src=ev.target.result;
-            box.appendChild(img);
-        };
-        reader.readAsDataURL(file);
-    });
-});
-captions.forEach((caption,index)=>{
-    caption.addEventListener('input',()=>{localStorage.setItem('caption'+index,caption.value)});
-});
+    function loadContent() {
+        // Super-top
+        const superTop = localStorage.getItem('super-top');
+        if(superTop) document.getElementById('super-top').value = superTop;
 
-// Pequenas caixas
-const smallBoxes = document.querySelectorAll('.small-box');
-const smallCaptions = document.querySelectorAll('.small-caption');
-smallBoxes.forEach((box,index)=>{
-    const fileInput=document.createElement('input');
-    fileInput.type='file';
-    fileInput.accept='image/*';
-    document.body.appendChild(fileInput);
-    box.addEventListener('click',()=>fileInput.click());
-    fileInput.addEventListener('change',(e)=>{
-        const file=e.target.files[0];
-        if(!file) return;
-        const reader=new FileReader();
-        reader.onload=function(ev){
-            localStorage.setItem('smallBox'+index,ev.target.result);
-            const oldImg=box.querySelector('img');
-            if(oldImg) box.removeChild(oldImg);
-            const img=document.createElement('img');
-            img.src=ev.target.result;
-            box.appendChild(img);
-        };
-        reader.readAsDataURL(file);
-    });
-});
-smallCaptions.forEach((caption,index)=>{
-    caption.addEventListener('input',()=>{localStorage.setItem('smallCaption'+index,caption.value)});
-});
+        // Topo 8 caixas
+        for (let i = 0; i < 8; i++) {
+            const savedTop = localStorage.getItem('top' + i);
+            if (savedTop) document.getElementById('top' + i).value = savedTop;
+        }
 
-// Barra inferior
-const bottomInputs = [
-    document.getElementById('bottom0'),
-    document.getElementById('bottom1'),
-    document.getElementById('bottom2'),
-    document.getElementById('bottom3'),
-    document.getElementById('bottom4'),
-    document.getElementById('bottom5')
-];
-bottomInputs.forEach((input,index)=>{input.addEventListener('input',()=>{localStorage.setItem('bottom'+index,input.value)})});
+        // Quadrados grandes
+        for (let i = 0; i < 6; i++) {
+            const dataUrl = localStorage.getItem('square' + i);
+            if (dataUrl) {
+                const square = document.getElementById('square' + i);
+                const img = document.createElement('img');
+                img.src = dataUrl;
+                img.classList.add('uploaded');
+                square.appendChild(img);
+            }
 
-// Carregar dados salvos
-function loadData(){
-    boxes.forEach((box,index)=>{
-        const dataUrl = localStorage.getItem('box'+index);
-        if(dataUrl){const img=document.createElement('img');img.src=dataUrl;box.appendChild(img);}
+            const savedText = localStorage.getItem('text' + i);
+            if (savedText) document.getElementById('text' + i).value = savedText;
+        }
+
+        // Quadrados menores
+        for (let i = 0; i < 16; i++) {
+            const dataUrl = localStorage.getItem('small' + i);
+            if (dataUrl) {
+                const square = document.getElementById('small' + i);
+                const img = document.createElement('img');
+                img.src = dataUrl;
+                img.classList.add('uploaded');
+                square.appendChild(img);
+            }
+
+            const savedText = localStorage.getItem('small-text' + i);
+            if (savedText) document.getElementById('small-text' + i).value = savedText;
+        }
+    }
+
+    // Super-top
+    const superTopBox = document.getElementById('super-top');
+    superTopBox.addEventListener('input', () => {
+        localStorage.setItem('super-top', superTopBox.value);
     });
-    captions.forEach((caption,index)=>{
-        const text = localStorage.getItem('caption'+index);
-        if(text) caption.value=text;
-    });
-    smallBoxes.forEach((box,index)=>{
-        const dataUrl = localStorage.getItem('smallBox'+index);
-        if(dataUrl){const img=document.createElement('img');img.src=dataUrl;box.appendChild(img);}
-    });
-    smallCaptions.forEach((caption,index)=>{
-        const text = localStorage.getItem('smallCaption'+index);
-        if(text) caption.value=text;
-    });
-    bottomInputs.forEach((input,index)=>{
-        const text = localStorage.getItem('bottom'+index);
-        if(text) input.value=text;
-    });
-}
-loadData();
+
+    // Topo 8 caixas
+    for (let i = 0; i < 8; i++) {
+        const topBox = document.getElementById('top' + i);
+        topBox.addEventListener('input', () => {
+            localStorage.setItem('top' + i, topBox.value);
+        });
+    }
+
+    // Quadrados grandes
+    for (let i = 0; i < 6; i++) {
+        const square = document.getElementById('square' + i);
+        const input = square.querySelector('input[type="file"]');
+        const textBox = document.getElementById('text' + i);
+
+        square.addEventListener('click', () => input.click());
+
+        input.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const oldImg = square.querySelector('img.uploaded');
+                    if (oldImg) oldImg.remove();
+
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('uploaded');
+                    square.appendChild(img);
+
+                    localStorage.setItem('square' + i, e.target.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        textBox.addEventListener('input', () => {
+            localStorage.setItem('text' + i, textBox.value);
+        });
+    }
+
+    // Quadrados menores
+    for (let i = 0; i < 16; i++) {
+        const square = document.getElementById('small' + i);
+        const input = square.querySelector('input[type="file"]');
+        const textBox = document.getElementById('small-text' + i);
+
+        square.addEventListener('click', () => input.click());
+
+        input.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const oldImg = square.querySelector('img.uploaded');
+                    if (oldImg) oldImg.remove();
+
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('uploaded');
+                    square.appendChild(img);
+
+                    localStorage.setItem('small' + i, e.target.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        textBox.addEventListener('input', () => {
+            localStorage.setItem('small-text' + i, textBox.value);
+        });
+    }
+
+    loadContent();
 </script>
 
 </body>
